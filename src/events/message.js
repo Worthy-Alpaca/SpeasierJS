@@ -14,11 +14,16 @@ module.exports = client => {
         if (message.channel.id === db.get(`${message.guild.id}.channel`)) {
 
             if (message.member.voice.channel === null) return;
-            if (!db.has(`${message.author.id}.voice`)) return;
+            //if (!db.has(`${message.author.id}.voice`)) return;
 
             AWS.config.update({ region: "us-west-2" });
 
-            const voice = message.guild.roles.cache.get(db.get(`${message.author.id}.voice`))
+            var voice = message.guild.roles.cache.get(db.get(`${message.author.id}.voice`));
+            if (!voice) {
+                voice = {
+                    name: "Raveena"
+                }
+            }
 
             var params = {
                 OutputFormat: "mp3",
@@ -31,7 +36,7 @@ module.exports = client => {
             let polly = new AWS.Polly();
 
             polly.synthesizeSpeech(params, function (err, data) {
-                if (err) console.log(err, err.stack); // an error occurred
+                if (err) return message.reply("An error occured, please contact a bot admin");
                 else {
 
                     let writeStream = fs.createWriteStream('./src/events/audio.mp3');
