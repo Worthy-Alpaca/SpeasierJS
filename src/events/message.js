@@ -69,7 +69,7 @@ module.exports = client => {
 
         let cmd = client.commands.get(command);
 
-        if (!cmd) command = client.commands.get(client.aliases.get(command));
+        if (!cmd) cmd = client.commands.get(client.aliases.get(command));
 
         if (!cmd) return message.reply(`\`${prefix + command}\` doesn't exist!`);
         if (cmd.category === "admin" && !message.member.hasPermission('ADMINISTRATOR')) {
