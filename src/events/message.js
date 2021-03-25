@@ -19,6 +19,9 @@ module.exports = client => {
         if (!cmd) command = client.commands.get(client.aliases.get(command));
         // if there is no command we return with an error message
         if (!cmd) return message.reply(`\`${prefix + command}\` doesn't exist!`);
+        if (cmd.category === "admin" && !message.member.hasPermission('ADMINISTRATOR')) {
+            return message.reply("You don't have the required permission to use this command!");
+        }
         // finally run the command
         cmd.execute(client, message, args);
     })
