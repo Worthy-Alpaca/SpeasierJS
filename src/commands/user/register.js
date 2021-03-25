@@ -17,7 +17,17 @@ module.exports = {
         if (!args[0]) return message.reply(embed.setColor('YELLOW').setDescription("❗ Please tag the voice role you want to use!"));
         
         let voice = message.mentions.roles.first();
+        let voices = ["Salli", "Joanna", "Ivy", "Kendra", "Kimberly", "Matthew", "Justin", "Nicole", "Russell", "Amy", "Emma", "Brian", "Raveena", "Aditi", "Geraint"];
+        
         if (!voice) return message.reply(embed.setColor('YELLOW').setDescription("❗ Please **tag** the voice role you want to use!"));
+        
+        if (!voices.includes(voice.name)) {
+            return message.reply(embed.setColor('RED').setDescription(`❌ You can't add that role!`));
+        }
+
+        if (voice.members.size !== 0) {
+            return message.reply(embed.setColor('YELLOW').setDescription(`❗ Someone is already using ${voice}! Please choose another voice.`))
+        }
 
         try {
             db.set(`${message.author.id}.voice`, voice.id);
