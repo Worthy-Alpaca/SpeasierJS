@@ -32,7 +32,7 @@ module.exports = {
         try {
             db.set(`${message.author.id}.voice`, voice.id);
             message.reply(embed.setColor('GREEN').setDescription(`✅ Successfully registered ${voice} to you.`));
-            message.member.roles.add(voice);
+            message.member.roles.add(voice).catch();
         } catch (error) {
             message.reply(embed.setColor('RED').setDescription(`❌ Something went wrong. Please contact a botadmin.`));
         }

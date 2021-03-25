@@ -15,7 +15,7 @@ module.exports = {
         const voice = message.guild.roles.cache.get(db.get(`${message.author.id}.voice`))
         if (db.delete(`${message.author.id}.voice`)) {
             message.reply(embed.setColor('GREEN').setDescription(`✅ Successfully unregistered ${voice}.`));
-            message.member.roles.remove(voice);
+            message.member.roles.remove(voice).catch();
         } else {
             message.reply(embed.setColor('RED').setDescription(`❌ Something went wrong. Please contact a botadmin.`));
         }
