@@ -54,8 +54,6 @@ module.exports = client => {
                     })
                 }
             });
-
-
             
         } else {
             if (message.content.startsWith(prefix)) return runCommand(message);
