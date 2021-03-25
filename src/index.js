@@ -4,6 +4,7 @@ const client = new Discord.Client();
 require('dotenv').config();
 client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
+client.categories = fs.readdirSync("./src/commands/");
 
 ["commands"].forEach(handler => {
     require(`./handler/${handler}`)(client);
