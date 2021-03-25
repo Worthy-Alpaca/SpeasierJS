@@ -20,7 +20,7 @@ module.exports = {
 
         try {
             db.set(`${message.guild.id}.channel`, channel.id);
-            message.reply(embed.setColor('GREEN').setDescription(`✅ Successfully registered ${channel}`));
+            message.reply(embed.setColor('GREEN').setDescription(`✅ Successfully registered ${channel}. Commands will no longer work in that channel!`));
         } catch (error) {
             message.reply(embed.setColor('RED').setDescription(`❌ Something went wrong. Please contact a botadmin.`));
         }
