@@ -43,7 +43,7 @@ git clone https://github.com/Worthy-Alpaca/SpeasierJS.git
 npm install
 ```
 
-- Lastly you need to put some things into the included `.env.copy` file and rename it to `.env`
+- Lastly you need to put some things into the included `.env.copy` file, copy and rename it to `.env`
     - Your discord Token
     - Your AWS credentials
 
