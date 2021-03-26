@@ -8,12 +8,12 @@ module.exports = {
     description: "Unregisters a voice to the user who sends it",
     execute: async (client, message, args) => {
         const embed = new Discord.MessageEmbed()
-        if (!db.has(`${message.author.id}.voice`) ) {
+        if (!db.has(`${message.guild.id}${message.author.id}.voice`) ) {
             embed.setColor('RED').setDescription(`❌ You have no voice registered. Use \`${config.prefix}register\` to register a new one!`);
             return message.reply(embed);
         }
-        const voice = message.guild.roles.cache.get(db.get(`${message.author.id}.voice`))
-        if (db.delete(`${message.author.id}.voice`)) {
+        const voice = message.guild.roles.cache.get(db.get(`${message.guild.id}${message.author.id}.voice`))
+        if (db.delete(`${message.guild.id}${message.author.id}.voice`)) {
             message.reply(embed.setColor('GREEN').setDescription(`✅ Successfully unregistered ${voice}.`));
             message.member.roles.remove(voice).catch();
         } else {

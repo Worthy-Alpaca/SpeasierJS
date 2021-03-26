@@ -18,7 +18,7 @@ module.exports = client => {
 
             AWS.config.update({ region: "us-west-2" });
 
-            var voice = message.guild.roles.cache.get(db.get(`${message.author.id}.voice`));
+            var voice = message.guild.roles.cache.get(db.get(`${message.guild.id}${message.author.id}.voice`));
             if (!voice) {
                 voice = {
                     name: "Raveena"
