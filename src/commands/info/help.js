@@ -21,8 +21,12 @@ module.exports = {
 
 
 };
-
-
+/**
+ * @description returns a list of all commands
+ * @param {Discord.Client} client - The client scope
+ * @param {Discord.Message} message - The message object
+ * @returns {Discord.MessageEmbed} Embed send in a message
+ */
 function getAll(client, message) {
 	const embed = new Discord.MessageEmbed()
 		.setColor('RANDOM')
@@ -47,8 +51,20 @@ function getAll(client, message) {
 	return message.channel.send(embed.setDescription(info));
 }
 
+/**
+ * @description returns specific command details
+ * @param {Discord.Client} client - The client scope
+ * @param {Discord.Message} message - The message object
+ * @param {string} input - The command to be searched for
+ * @returns {Discord.MessageEmbed} Embed send  in a message
+ */
 function getCMD(client, message, input) {
-	const embed = new Discord.MessageEmbed();
+	const embed = new Discord.MessageEmbed()
+		.setColor('RANDOM')
+		.setFooter(`Version: ${version}`)
+		.setTimestamp()
+		.setTitle('Help menu')
+		.setThumbnail(client.user.displayAvatarURL());
 
 	const cmd = client.commands.get(input.toLowerCase()) || client.commands.get(client.aliases.get(input.toLowerCase()));
 
