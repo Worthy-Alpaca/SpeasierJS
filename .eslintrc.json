@@ -14,16 +14,28 @@
             "tab"
         ],
         "linebreak-style": [
-            "error",
+            "warn",
             "windows"
         ],
         "quotes": [
-            "error",
+            "warn",
             "single"
         ],
         "semi": [
             "error",
             "always"
-        ]
+        ],
+        "no-undef": "off",
+        "no-unused-vars": [
+            "error",
+            {
+                "vars": "all",
+                "args": "none",
+                "ignoreRestSiblings": false
+            }
+        ],
+        "no-redeclare": "off",
+        "no-async-promise-executor": "off",
+        "no-console": "off"
     }
 }
