@@ -1,6 +1,5 @@
 const Discord = require('discord.js');
 const db = require('quick.db');
-const config = require('../../config.json');
 
 module.exports = {
 	name: 'profile',
@@ -10,7 +9,7 @@ module.exports = {
 		const embed = new Discord.MessageEmbed();
 
 		if (!db.has(`${message.guild.id}${message.author.id}.voice`)) {
-			embed.setColor('RED').setDescription(`❌ You have no voice registered. Use \`${config.prefix}register\` to register a new one!`);
+			embed.setColor('RED').setDescription(`❌ You have no voice registered. Use \`${client.prefix}register\` to register a new one!`);
 			return message.reply(embed);
 		}
 		const voice = message.guild.roles.cache.get(db.get(`${message.guild.id}${message.author.id}.voice`));

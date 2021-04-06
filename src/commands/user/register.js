@@ -1,6 +1,5 @@
 const Discord = require('discord.js');
 const db = require('quick.db');
-const config = require('../../config.json');
 
 module.exports = {
 	name: 'register',
@@ -11,7 +10,7 @@ module.exports = {
 		const embed = new Discord.MessageEmbed();
         
 		if (db.has(`${message.guild.id}${message.author.id}.voice`)) {
-			embed.setColor('RED').setDescription(`❌ You already have a voice registered. Use \`${config.prefix}unregister\` before registering a new one!`);
+			embed.setColor('RED').setDescription(`❌ You already have a voice registered. Use \`${client.prefix}unregister\` before registering a new one!`);
 			return message.reply(embed);
 		}
 		if (!args[0]) return message.reply(embed.setColor('YELLOW').setDescription('❗ Please tag the voice role you want to use!'));

@@ -1,6 +1,5 @@
 const Discord = require('discord.js');
 const db = require('quick.db');
-const config = require('../../config.json');
 
 module.exports = {
 	name: 'setchannel',
@@ -10,7 +9,7 @@ module.exports = {
 	execute: async (client, message, args) => {
 		const embed = new Discord.MessageEmbed();
 		if (db.has(`${message.guild.id}.channel`)) {
-			embed.setColor('RED').setDescription(`❌ You already have a channel registered. Use \`${config.prefix}delchannel\` before registering a new one!`);
+			embed.setColor('RED').setDescription(`❌ You already have a channel registered. Use \`${client.prefix}delchannel\` before registering a new one!`);
 			return message.reply(embed);
 		}
 		if (!args[0]) return message.reply(embed.setColor('YELLOW').setDescription('❗ Please tag the channel you want to use!'));
