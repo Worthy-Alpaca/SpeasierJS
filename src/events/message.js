@@ -1,8 +1,6 @@
-const { prefix } = require('../config.json');
 const db = require('quick.db');
 var AWS = require('aws-sdk');
-const fs = require('fs');
-const path = require('path');
+const Stream = require('stream');
 
 module.exports = client => {
 	client.on('message', async message => {
@@ -14,7 +12,6 @@ module.exports = client => {
 		if (message.channel.id === db.get(`${message.guild.id}.channel`)) {
 
 			if (message.member.voice.channel === null) return;
-			//if (!db.has(`${message.author.id}.voice`)) return;
 
 			AWS.config.update({ region: 'us-west-2' });
 
@@ -35,36 +32,35 @@ module.exports = client => {
 
 			let polly = new AWS.Polly();
 
-			polly.synthesizeSpeech(params, function (err, data) {
+			polly.synthesizeSpeech(params, async function (err, data) {
 				if (err) return message.reply('An error occured, please contact a bot admin');
 				else {
-
-					let writeStream = fs.createWriteStream('./src/events/audio.mp3');
-					writeStream.write(data.AudioStream);
-					writeStream.on('ready', () => {
+					if (data.AudioStream instanceof Buffer) {
+						var bufferStream = new Stream.PassThrough();
+						let readable = bufferStream.end(data.AudioStream);
 						const channel = message.member.voice.channel;
 						channel.join().then(connection => {
-							const dispatcher = connection.play(path.join(__dirname, 'audio.mp3'));
-							dispatcher.on('start', () => { 
+							const dispatcher = connection.play(readable);
+							dispatcher.on('start', () => {
 								dispatcher.setVolume(0.70);
 							});
 
-							dispatcher.on('error', (err) => connection.disconnect()); 
+							dispatcher.on('error', (err) => {
+								connection.disconnect();
+								return message.channel.send(`Something went wrong. Please contact a botadmin. Error: ${err}`);
+							});
 						});
-					});
+					}
 				}
 			});
             
 		} else {
-			if (message.content.startsWith(prefix)) return runCommand(message);
+			if (message.content.startsWith(client.prefix)) return runCommand(message);
 		}
-        
-        
-        
 	});
 
 	function runCommand(message) {
-		const args = message.content.slice(prefix.length).trim().split(/ +/g);
+		const args = message.content.slice(client.prefix.length).trim().split(/ +/g);
 
 		const command = args.shift().toLowerCase();
 
@@ -74,7 +70,8 @@ module.exports = client => {
 
 		if (!cmd) cmd = client.commands.get(client.aliases.get(command));
 
-		if (!cmd) return message.reply(`\`${prefix + command}\` doesn't exist!`);
+		if (!cmd) return message.reply(`\`${client.prefix + command}\` doesn't exist!`);
+
 		if (cmd.category === 'admin' && !message.member.hasPermission('ADMINISTRATOR')) {
 			return message.reply('You don\'t have the required permission to use this command!');
 		}
