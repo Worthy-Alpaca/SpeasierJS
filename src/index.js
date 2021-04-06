@@ -1,6 +1,7 @@
 const fs = require('fs');
 const Discord = require('discord.js');
-const client = new Discord.Client();
+const Client = require('./client/client');
+const client = new Client();
 require('dotenv').config();
 client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
