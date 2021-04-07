@@ -6,7 +6,7 @@ This bot allows you to use Amazons Polly TTS engine so that you may speak withou
 
 For this to work you need to have a number of roles on your discord server, corresponding with the voices available with Polly.
 
-Those voices include, but are not [limited](https://docs.aws.amazon.com/polly/latest/dg/voicelist.html) too: "Salli", "Joanna", "Ivy", "Kendra", "Kimberly", "Matthew", "Justin", "Nicole", "Russell", "Amy", "Emma", "Brian", "Raveena", "Aditi", "Geraint". This bot also includes a command to create these roles for you. 
+Those voices include, but are not [limited](https://docs.aws.amazon.com/polly/latest/dg/voicelist.html) to: "Salli", "Joanna", "Ivy", "Kendra", "Kimberly", "Matthew", "Justin", "Nicole", "Russell", "Amy", "Emma", "Brian", "Raveena", "Aditi", "Geraint", "Joey". This bot also includes a command to create these roles for you. You can add new Voices from the list of available ones.
 
 The prefix for this bot is `?` and it includes a `?help` command where you can see all other commands. Commands under the `admin` category require server administrator permissions to execute.
 
