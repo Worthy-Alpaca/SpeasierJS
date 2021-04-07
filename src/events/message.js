@@ -33,7 +33,7 @@ module.exports = client => {
 			let polly = new AWS.Polly();
 
 			polly.synthesizeSpeech(params, async function (err, data) {
-				if (err) return message.reply('An error occured, please contact a bot admin');
+				if (err) return message.reply(`An error occured, please contact a bot admin! Error: ${err}`);
 				else {
 					if (data.AudioStream instanceof Buffer) {
 						var bufferStream = new Stream.PassThrough();
