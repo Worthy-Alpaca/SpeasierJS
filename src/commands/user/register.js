@@ -16,7 +16,7 @@ module.exports = {
 		if (!args[0]) return message.reply(embed.setColor('YELLOW').setDescription('❗ Please tag the voice role you want to use!'));
         
 		let voice = message.mentions.roles.first();
-		let voices = ['Salli', 'Joanna', 'Ivy', 'Kendra', 'Kimberly', 'Matthew', 'Justin', 'Nicole', 'Russell', 'Amy', 'Emma', 'Brian', 'Raveena', 'Aditi', 'Geraint'];
+		let voices = db.get(`${message.guild.id}.voices`);
         
 		if (!voice) return message.reply(embed.setColor('YELLOW').setDescription('❗ Please **tag** the voice role you want to use!'));
         
