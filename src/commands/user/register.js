@@ -9,7 +9,7 @@ module.exports = {
 	execute: async (client, message, args) => {
 		const embed = new Discord.MessageEmbed();
         
-		if (db.has(`${message.guild.id}${message.author.id}.voice`)) {
+		if (db.has(`${message.guild.id}.registered.${message.author.id}.voice`)) {
 			embed.setColor('RED').setDescription(`❌ You already have a voice registered. Use \`${client.prefix}unregister\` before registering a new one!`);
 			return message.reply(embed);
 		}
@@ -17,7 +17,7 @@ module.exports = {
         
 		let voice = message.mentions.roles.first();
 		let voices = db.get(`${message.guild.id}.voices`);
-        
+		if (!voices) return message.reply(`You need to create the voices first! Use \`${client.prefix}createvoices\` for that!`);
 		if (!voice) return message.reply(embed.setColor('YELLOW').setDescription('❗ Please **tag** the voice role you want to use!'));
         
 		if (!voices.includes(voice.name)) {
@@ -29,7 +29,7 @@ module.exports = {
 		}
 
 		try {
-			db.set(`${message.guild.id}${message.author.id}.voice`, voice.id);
+			db.set(`${message.guild.id}.registered.${message.author.id}.voice`, voice.id);
 			message.reply(embed.setColor('GREEN').setDescription(`✅ Successfully registered ${voice} to you.`));
 			message.member.roles.add(voice).catch();
 		} catch (error) {

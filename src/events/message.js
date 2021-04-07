@@ -6,7 +6,7 @@ module.exports = client => {
 	client.on('message', async message => {
         
 		if (message.author.bot) return;
-        
+
 		if (message.guild === null) return;
 
 		if (message.channel.id === db.get(`${message.guild.id}.channel`)) {
@@ -15,7 +15,7 @@ module.exports = client => {
 
 			AWS.config.update({ region: 'us-west-2' });
 
-			var voice = message.guild.roles.cache.get(db.get(`${message.guild.id}${message.author.id}.voice`));
+			var voice = message.guild.roles.cache.get(db.get(`${message.guild.id}.registered.${message.author.id}.voice`));
 			if (!voice) {
 				voice = {
 					name: 'Raveena'
