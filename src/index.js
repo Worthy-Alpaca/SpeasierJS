@@ -1,11 +1,6 @@
 const fs = require('fs');
-const Discord = require('discord.js');
-const Client = require('./client/client');
-const client = new Client();
+const client = require('./client/client');
 require('dotenv').config();
-client.commands = new Discord.Collection();
-client.aliases = new Discord.Collection();
-client.categories = fs.readdirSync('./src/commands/');
 
 ['commands'].forEach(handler => {
 	require(`./handler/${handler}`)(client);

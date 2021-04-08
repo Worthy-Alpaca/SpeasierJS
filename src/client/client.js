@@ -1,11 +1,20 @@
-const { Client } = require('discord.js');
+const { Client, Collection } = require('discord.js');
+const fs = require('fs');
 
-module.exports = class extends Client {
+class CustomClient extends Client {
 	constructor(config) {
 		super({});
 
 		this.prefix = '?';
 
+		this.commands = new Collection();
+		this.aliases = new Collection();
+		this.categories = fs.readdirSync('./src/commands/');
+
 		this.config = config;
 	}
-};
+}
+
+const client = new CustomClient();
+
+module.exports = client;
