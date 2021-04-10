@@ -4,7 +4,6 @@ const Stream = require('stream');
 
 module.exports = client => {
 	client.on('message', async message => {
-		console.log(content);
 		if (message.author.bot) return;
 
 		if (message.guild === null) return;
@@ -12,6 +11,8 @@ module.exports = client => {
 		if (message.channel.id === db.get(`${message.guild.id}.channel`)) {
 
 			if (message.member.voice.channel === null) return;
+
+			if (message.content.startsWith('https://') || message.content.startsWith('http://')) return;
 
 			AWS.config.update({ region: 'us-west-2' });
 
