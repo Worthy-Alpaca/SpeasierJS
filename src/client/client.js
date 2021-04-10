@@ -5,7 +5,7 @@ class CustomClient extends Client {
 	constructor(config) {
 		super({});
 
-		this.prefix = '?';
+		this.prefix = process.env.PREFIX;
 
 		this.commands = new Collection();
 		this.aliases = new Collection();
