@@ -54,6 +54,8 @@ module.exports = client => {
 
 			let polly = new AWS.Polly();
 
+			let volume = db.get(`${message.guild.id}.registered.${message.author.id}.volume`) || 1;
+
 			polly.synthesizeSpeech(params, async function (err, data) {
 				if (err) return message.reply(`An error occured, please contact a bot admin! Error: ${err}`);
 				else {
@@ -64,7 +66,7 @@ module.exports = client => {
 						channel.join().then(connection => {
 							const dispatcher = connection.play(readable);
 							dispatcher.on('start', () => {
-								dispatcher.setVolume(0.70);
+								dispatcher.setVolume(volume);
 							});
 
 							dispatcher.on('error', (err) => {
