@@ -4,7 +4,7 @@ const Stream = require('stream');
 
 module.exports = client => {
 	client.on('message', async message => {
-        
+		console.log(content);
 		if (message.author.bot) return;
 
 		if (message.guild === null) return;
@@ -22,10 +22,16 @@ module.exports = client => {
 				};
 			}
 
+			var content = message.content;
+			var re = /[_]/g;
+			if (message.content.startsWith('_') && message.content.endsWith('_')) {
+				content = message.member.displayName + ' ' + message.content.replace(re, '');
+			}
+
 			var params = {
 				OutputFormat: 'mp3',
 				SampleRate: '24000',
-				Text: message.content,
+				Text: content,
 				TextType: 'text',
 				VoiceId: voice.name
 			};
