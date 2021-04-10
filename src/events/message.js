@@ -23,10 +23,12 @@ module.exports = client => {
 
 			var content = message.content;
 			var re = /[_]/g;
-			if (message.content.startsWith('_') && message.content.endsWith('_')) {
+			if (content.startsWith('_') && content.endsWith('_')) {
 				content = message.member.displayName + ' ' + message.content.replace(re, '');
-			} else if (message.content.includes('https://') || message.content.includes('http://')) {
-				const args = message.content.split(' ');
+			}
+			
+			if (content.includes('https://') || content.includes('http://')) {
+				const args = content.split(' ');
 				let cleanargs = [];
 				args.forEach(arg => {
 					if (arg.startsWith('https://') || arg.startsWith('http://')) {
@@ -36,6 +38,10 @@ module.exports = client => {
 					}
 				});
 				content = cleanargs.join(' ');
+			}
+			
+			if (message.mentions.users.size > 0 || message.mentions.channels.size > 0) {
+				content = await filterInteger(message, content);
 			}
 
 			var params = {
@@ -93,6 +99,34 @@ module.exports = client => {
 		}
 
 		cmd.execute(client, message, args);
+	}
+
+	function filterInteger (message, content) {
+		return new Promise(function (resolve, reject) {
+			const args = content.trim().split(' ');
+			let cleanstring = [];
+			args.forEach(arg => {
+				var string = Array.from(arg);
+				if (string.includes('@') || string.includes('#')) {
+					var mbr = [];
+					string.forEach(function (letter) {
+						if (Number.isInteger(+letter)) {
+							mbr.push(letter);
+						}
+					});
+					var mbr2 = message.guild.roles.cache.find(r => r.id === mbr.join('')) || message.guild.channels.cache.find(r => r.id === mbr.join(''));
+					if (!mbr2) {
+						mbr2 = message.guild.members.cache.find(r => r.id === mbr.join(''));
+					} else {
+						return cleanstring.push(mbr2.name);
+					}
+					return cleanstring.push(mbr2.displayName);
+				} else {
+					return cleanstring.push(string.join(''));
+				}
+			});
+			return resolve(cleanstring.join(' '));
+		});
 	}
 };
 
