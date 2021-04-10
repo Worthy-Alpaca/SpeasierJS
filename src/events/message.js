@@ -12,8 +12,6 @@ module.exports = client => {
 
 			if (message.member.voice.channel === null) return;
 
-			if (message.content.startsWith('https://') || message.content.startsWith('http://')) return;
-
 			AWS.config.update({ region: 'us-west-2' });
 
 			var voice = message.guild.roles.cache.get(db.get(`${message.guild.id}.registered.${message.author.id}.voice`));
@@ -27,6 +25,17 @@ module.exports = client => {
 			var re = /[_]/g;
 			if (message.content.startsWith('_') && message.content.endsWith('_')) {
 				content = message.member.displayName + ' ' + message.content.replace(re, '');
+			} else if (message.content.includes('https://') || message.content.includes('http://')) {
+				const args = message.content.split(' ');
+				let cleanargs = [];
+				args.forEach(arg => {
+					if (arg.startsWith('https://') || arg.startsWith('http://')) {
+						cleanargs.push('link');
+					} else {
+						cleanargs.push(arg);
+					}
+				});
+				content = cleanargs.join(' ');
 			}
 
 			var params = {
