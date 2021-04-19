@@ -1,6 +1,7 @@
 const db = require('quick.db');
 var AWS = require('aws-sdk');
 const Stream = require('stream');
+const fetch = require('node-fetch');
 
 module.exports = client => {
 	client.on('message', async message => {
@@ -83,7 +84,7 @@ module.exports = client => {
 		}
 	});
 
-	function runCommand(message) {
+	async function runCommand(message) {
 		const args = message.content.slice(client.prefix.length).trim().split(/ +/g);
 
 		const command = args.shift().toLowerCase();
@@ -94,7 +95,18 @@ module.exports = client => {
 
 		if (!cmd) cmd = client.commands.get(client.aliases.get(command));
 
-		if (!cmd) return message.reply(`\`${client.prefix + command}\` doesn't exist!`);
+		if (!cmd) {
+			const result = await fetch('https://icanhazdadjoke.com/', {
+				method: 'GET',
+				headers: {
+					'Accept': 'application/json'
+				}
+			}).then(res => {
+				return res.json();
+			});
+			message.reply(`\`${client.prefix + command}\` doesn't exist! Have a dadjoke instead:`);
+			return message.channel.send(result.joke);
+		}
 
 		if (cmd.category === 'admin' && !message.member.hasPermission('ADMINISTRATOR')) {
 			return message.reply('You don\'t have the required permission to use this command!');
