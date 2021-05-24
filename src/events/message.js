@@ -8,15 +8,15 @@ module.exports = client => {
 
 		if (message.guild === null) return;
 
+		if (message.content.startsWith(client.prefix)) return runCommand(message);
+		
 		if (message.channel.id === db.get(`${message.guild.id}.channel`)) {
 
 			if (message.member.voice.channel === null) return;
 
 			return textToSpeechSynth(message);
             
-		} else {
-			if (message.content.startsWith(client.prefix)) return runCommand(message);
-		}
+		} 
 	});
 
 	async function runCommand(message) {
