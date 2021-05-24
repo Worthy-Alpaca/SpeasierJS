@@ -27,7 +27,7 @@ module.exports = {
 					.catch((error) => message.reply(`Could not create a role for ${args[0]}`));
 			}
 		} else {
-			return message.reply(`Cannot create ${args[0]}! Please check if it's spelled correctly!`);
+			return message.reply(`Cannot create ${args[0]}! It might be incompatible. Please check with the creator of the bot.`);
 		}
 
 	}
