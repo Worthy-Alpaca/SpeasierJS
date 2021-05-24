@@ -1,4 +1,5 @@
 const fetch = require('node-fetch');
+const textToSpeechSynth = require('../../utils/functions');
 
 module.exports = {
 	name: 'dadjoke',
@@ -18,6 +19,9 @@ module.exports = {
 			return res.json();
 		});
 		let joke = result.results[Math.floor(Math.random() * result.results.length)];
+		if (message.member.voice.channel) {
+			textToSpeechSynth(message, joke.joke);
+		}
 		return message.channel.send(joke.joke);
 	}
 };
