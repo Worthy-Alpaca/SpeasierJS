@@ -1,9 +1,17 @@
 var AWS = require('aws-sdk');
 const db = require('quick.db');
 const Stream = require('stream');
+const CryptoJS = require('crypto-js');
 
 async function textToSpeechSynth(message, text) {
-	AWS.config.update({ region: 'us-west-2' });
+	if (!db.has(`${message.guild.id}.config.accessKeyID`) || !db.has(`${message.guild.id}.config.secretAccessKey`)) {
+		return message.reply('You need to set your AWS credentials before using this bot. Use `?setkeys` to do that!');
+	}
+	AWS.config.update({
+		region: 'us-west-2',
+		accessKeyId: decrypt(db.get(`${message.guild.id}.config.accessKeyID`)).toString(CryptoJS.enc.Utf8),
+		secretAccessKey: decrypt(db.get(`${message.guild.id}.config.secretAccessKey`)).toString(CryptoJS.enc.Utf8)
+	});
 
 	var voice = message.guild.roles.cache.get(db.get(`${message.guild.id}.registered.${message.author.id}.voice`));
 	if (!voice) {
@@ -104,4 +112,12 @@ function filterInteger(message, content) {
 	});
 }
 
-module.exports = textToSpeechSynth;
+function encrypt(token) {
+	return CryptoJS.AES.encrypt(token, process.env.CRYPTO_CYPER);
+}
+
+function decrypt(token) {
+	return CryptoJS.AES.decrypt(token, process.env.CRYPTO_CYPER);
+}
+
+module.exports = {textToSpeechSynth, encrypt, decrypt};

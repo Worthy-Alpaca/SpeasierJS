@@ -1,6 +1,6 @@
 const db = require('quick.db');
 const fetch = require('node-fetch');
-const textToSpeechSynth = require('../utils/functions');
+const {textToSpeechSynth} = require('../utils/functions');
 
 module.exports = client => {
 	client.on('message', async message => {
