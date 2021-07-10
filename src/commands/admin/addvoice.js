@@ -3,7 +3,8 @@ const { voices } = require('../../assets/voices.json');
 module.exports = {
 	name: 'addvoice',
 	category: 'admin',
-	description: 'Adds a voice to be used and creates the corresponding role.',
+	description: 'Adds a voice to be used and creates the corresponding role. See ?voices for available voices to add.',
+	usage: '<Voice>',
 	execute: async (client, message, args) => {
 		
 		if (!db.has(`${message.guild.id}.voices`)) {
