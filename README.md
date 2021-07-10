@@ -13,6 +13,8 @@ Those voices include, but are not [limited](https://docs.aws.amazon.com/polly/la
 
 The prefix for this bot is `?` and it includes a `?help` command where you can view all other commands. Commands under the `admin` category require server administrator permissions to execute.
 
+You can invite Speasier to your server [here][invite].
+
 ## How to setup
 
 1. Create the voice roles
@@ -30,3 +32,4 @@ The prefix for this bot is `?` and it includes a `?help` command where you can v
 Check out the [contributing guide][contributing]
 
 [contributing]: CONTRIBUTING.md
+[invite]: https://discord.com/api/oauth2/authorize?client_id=766259584040960001&permissions=271608896&scope=bot
