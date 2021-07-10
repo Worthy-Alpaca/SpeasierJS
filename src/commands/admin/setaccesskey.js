@@ -15,9 +15,11 @@ module.exports = {
 		}
 
 		try {
+			console.log(accessKeyID, secretAccessKey);
 			db.set(`${message.guild.id}.config.accessKeyID`, encrypt(accessKeyID).toString());
 			db.set(`${message.guild.id}.config.secretAccessKey`, encrypt(secretAccessKey).toString());
 		} catch (error) {
+			console.error(error);
 			return message.reply(`An error occured: ${error}`);
 		}
 		return message.reply('Keys successfully encrypted.');
