@@ -13,8 +13,8 @@ module.exports = {
 			.setTimestamp()
 			.setAuthor(message.guild.name, message.guild.iconURL())
 			.setTitle('Available Voices')
-			.addField('Current Voices', cVoices.join('\n'), true)
-			.addField('Available Voices', aVoices.join('\n'), true);
+			.addField('Usable Voices', cVoices.join('\n'), true)
+			.addField('Addable Voices', aVoices.join('\n'), true);
 		
 		return message.channel.send(embed);
 
