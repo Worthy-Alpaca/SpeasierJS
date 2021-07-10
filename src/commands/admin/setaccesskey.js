@@ -10,9 +10,16 @@ module.exports = {
 		const secretAccessKey = args[1];
 		await message.delete();
 
-		db.set(`${message.guild.id}.config.accessKeyID`, encrypt(accessKeyID).toString());
-		db.set(`${message.guild.id}.config.secretAccessKey`, encrypt(secretAccessKey).toString());
-		message.reply('Keys successfully encrypted.');
+		if (!accessKeyID || !secretAccessKey) {
+			return message.reply('You did not provide any keys to set.');
+		}
 
+		try {
+			db.set(`${message.guild.id}.config.accessKeyID`, encrypt(accessKeyID).toString());
+			db.set(`${message.guild.id}.config.secretAccessKey`, encrypt(secretAccessKey).toString());
+		} catch (error) {
+			return message.reply(`An error occured: ${error}`);
+		}
+		return message.reply('Keys successfully encrypted.');
 	}
 };
