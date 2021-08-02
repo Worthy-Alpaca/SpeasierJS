@@ -20,7 +20,7 @@ Speasier is a Text-to-speech bot that can talk for you! It features a number of 
 
 ## Commands
 
-Here are all the commands that Speasier provides. For your convenience they are split into four categories.
+Here are all the commands that Speasier provides. For your convenience they are split into four categories. Speasier will provide you this information in Discord by typing `?help`.
 
 ### Admin
 
