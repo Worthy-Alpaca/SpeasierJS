@@ -9,7 +9,7 @@ module.exports = client => {
 		const embed = new Discord.MessageEmbed()
 			.setTimestamp()
 			.setTitle('Thank you for adding me!')
-			.setDescription('Thank you for adding me to your guild. Please see [here] for documentation on how to make me work for you.')
+			.setDescription('Thank you for adding me to your guild. Please see [here](https://worthy-alpaca.github.io/SpeasierJS/) for documentation on how to make me work for you.')
 			.setFooter(`Version: ${client.version}`);
 
 		let channel = guild.systemChannel();
