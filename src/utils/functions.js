@@ -2,6 +2,7 @@ var AWS = require('aws-sdk');
 const db = require('quick.db');
 const Stream = require('stream');
 const CryptoJS = require('crypto-js');
+const { joinVoiceChannel, AudioPlayer, createAudioResource } = require('@discordjs/voice');
 
 async function textToSpeechSynth(message, text) {
 	if (!db.has(`${message.guild.id}.config.accessKeyID`) || !db.has(`${message.guild.id}.config.secretAccessKey`)) {
@@ -68,16 +69,19 @@ async function textToSpeechSynth(message, text) {
 				var bufferStream = new Stream.PassThrough();
 				let readable = bufferStream.end(data.AudioStream);
 				const channel = message.member.voice.channel;
-				channel.join().then(connection => {
-					const dispatcher = connection.play(readable);
-					dispatcher.on('start', () => {
-						dispatcher.setVolume(volume);
-					});
-
-					dispatcher.on('error', (err) => {
-						connection.disconnect();
-						return message.channel.send(`Something went wrong. Please contact a botadmin. Error: ${err}`);
-					});
+				const connection =  joinVoiceChannel({
+					channelId: channel.id,
+					guildId: channel.guild.id,
+					adapterCreator: channel.guild.voiceAdapterCreator
+				});
+				const player = new AudioPlayer();
+				connection.subscribe(player);
+				const audio = createAudioResource(readable, {inlineVolume: true});
+				audio.volume.setVolume(volume);
+				player.play(audio);
+				player.on('error', (err) => {
+					connection.destroy();
+					return message.channel.send(`Something went wrong. Please contact a botadmin. Error: ${err}`);
 				});
 			}
 		}
