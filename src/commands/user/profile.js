@@ -10,7 +10,7 @@ module.exports = {
 
 		if (!db.has(`${message.guild.id}.registered.${message.author.id}.voice`)) {
 			embed.setColor('RED').setDescription(`❌ You have no voice registered. Use \`${client.prefix}register\` to register a new one!`);
-			return message.reply(embed);
+			return message.reply({ embeds: [embed] });
 		}
 		const voice = message.guild.roles.cache.get(db.get(`${message.guild.id}.registered.${message.author.id}.voice`));
 		embed.setTimestamp();
@@ -22,7 +22,7 @@ module.exports = {
 			const channel = message.guild.channels.cache.get(db.get(`${message.guild.id}.channel`));
 			embed.addField('Channel', channel);
 		}
-		message.reply(embed);
+		message.reply({ embeds: [embed] });
         
 	}
 };

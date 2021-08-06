@@ -10,7 +10,7 @@ module.exports = {
 
 		if (!db.has(`${message.guild.id}.channel`)) {
 			embed.setColor('RED').setDescription(`❌ You have no channel registered. Use \`${client.prefix}setchannel\` to register a new one!`);
-			return message.reply(embed);
+			return message.channel.send({ embeds: [embed] });
 		}
 		const channel = message.guild.channels.cache.get(db.get(`${message.guild.id}.channel`));
 		embed.setTimestamp();
@@ -18,7 +18,7 @@ module.exports = {
 		embed.setDescription('Here you\'ll find all information stored about the guild');
 		embed.addField('Channel', channel);
 		embed.setColor('RANDOM');
-		message.reply(embed);
+		message.channel.send({ embeds: [embed]});
 
 	}
 };

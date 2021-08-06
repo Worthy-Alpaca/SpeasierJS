@@ -47,7 +47,7 @@ function getAll(client, message) {
 		.map(cat => stripIndents`**${cat[0].toUpperCase() + cat.slice(1)}** \n${commands(cat)}`)
 		.reduce((string, category) => string + '\n' + category);
 
-	return message.channel.send(embed.setDescription(info));
+	return message.channel.send({ embeds: [embed.setDescription(info)]});
 }
 
 /**
@@ -70,7 +70,7 @@ function getCMD(client, message, input) {
 	let info = `What do you mean with **${input.toLowerCase()}**? I don't know what you are talking about`;
 
 	if (!cmd) {
-		return message.channel.send(embed.setColor('RED').setDescription(info));
+		return message.channel.send({ embeds: [embed.setColor('RED').setDescription(info)]});
 
 	}
 
@@ -83,7 +83,7 @@ function getCMD(client, message, input) {
 
 	}
 
-	return message.channel.send(embed.setColor('GREEN').setDescription(info));
+	return message.channel.send({ embeds: [embed.setColor('GREEN').setDescription(info)]});
 }
 
 

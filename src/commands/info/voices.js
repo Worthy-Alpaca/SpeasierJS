@@ -16,7 +16,7 @@ module.exports = {
 			.addField('Usable Voices', cVoices.join('\n'), true)
 			.addField('Addable Voices', aVoices.join('\n'), true);
 		
-		return message.channel.send(embed);
+		return message.channel.send({ embeds: [embed]});
 
 	}
 };

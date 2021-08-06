@@ -4,7 +4,7 @@ const { version } = require('../../package.json');
 
 class CustomClient extends Client {
 	constructor(config) {
-		super({});
+		super({ intents: config.intents });
 
 		this.prefix = '?';
 		this.version = version;
@@ -17,6 +17,13 @@ class CustomClient extends Client {
 	}
 }
 
-const client = new CustomClient();
+const intents = [
+	Intents.FLAGS.GUILDS,
+	Intents.FLAGS.GUILD_MESSAGES,
+	Intents.FLAGS.GUILD_MEMBERS,
+	Intents.FLAGS.GUILD_VOICE_STATES
+];
+
+const client = new CustomClient({intents});
 
 module.exports = client;

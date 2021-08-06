@@ -15,9 +15,9 @@ module.exports = client => {
 		let channel = guild.systemChannel();
 
 		if (!channel) {
-			return guild.owner.send(embed);
+			return guild.owner.send({embeds: [embed]});
 		}
 
-		channel.send(embed);
+		channel.send({ embeds: [embed] });
 	});
 };
