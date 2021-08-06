@@ -12,7 +12,9 @@ module.exports = client => {
 		voices.forEach(voice => {
 			let role = message.guild.roles.cache.find(r => r.name === voice);
 			if (!role) return;
-			role.delete();
+			role.delete().catch(error => {
+				return;
+			});
 		});
 
 		db.delete(`${guild.id}`);
