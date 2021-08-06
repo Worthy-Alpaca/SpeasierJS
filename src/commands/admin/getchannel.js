@@ -16,7 +16,7 @@ module.exports = {
 		embed.setTimestamp();
 		embed.setAuthor(`${message.member.displayName}`, message.member.user.displayAvatarURL());
 		embed.setDescription('Here you\'ll find all information stored about the guild');
-		embed.addField('Channel', channel);
+		embed.addField('Channel', channel.toString());
 		embed.setColor('RANDOM');
 		message.channel.send({ embeds: [embed]});
 
