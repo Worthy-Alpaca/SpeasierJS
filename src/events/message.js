@@ -1,9 +1,11 @@
 const db = require('quick.db');
 const fetch = require('node-fetch');
-const {textToSpeechSynth} = require('../utils/functions');
+const { textToSpeechSynth } = require('../utils/functions');
+const { Permissions } = require('discord.js');
+const { getVoiceConnection } = require('@discordjs/voice');
 
 module.exports = client => {
-	client.on('message', async message => {
+	client.on('messageCreate', async message => {
 		if (message.author.bot) return;
 
 		if (message.guild === null) return;
@@ -13,6 +15,20 @@ module.exports = client => {
 		if (message.channel.id === db.get(`${message.guild.id}.channel`)) {
 
 			if (message.member.voice.channel === null) return;
+
+			const time = 900000;
+
+			client.playing.set(message.guild.id, Date.now() + time);
+			
+			setTimeout(() => {
+				if (client.playing.get(message.guild.id) >= Date.now()) {
+					return;
+				} else {
+					const connection = getVoiceConnection(message.guild.id);
+					connection.destroy();
+				}
+			}, time);
+			
 
 			return textToSpeechSynth(message);
             
@@ -43,7 +59,7 @@ module.exports = client => {
 			return message.channel.send(result.joke);
 		}
 
-		if (cmd.category === 'admin' && !message.member.hasPermission('ADMINISTRATOR')) {
+		if (cmd.category === 'admin' && !message.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) {
 			return message.reply('You don\'t have the required permission to use this command!');
 		}
 

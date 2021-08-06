@@ -1,4 +1,4 @@
-const { Client, Collection } = require('discord.js');
+const { Client, Collection, Intents } = require('discord.js');
 const fs = require('fs');
 const { version } = require('../../package.json');
 
@@ -8,6 +8,8 @@ class CustomClient extends Client {
 
 		this.prefix = '?';
 		this.version = version;
+
+		this.playing = new Map();
 
 		this.commands = new Collection();
 		this.aliases = new Collection();
