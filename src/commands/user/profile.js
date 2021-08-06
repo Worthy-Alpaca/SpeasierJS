@@ -16,11 +16,11 @@ module.exports = {
 		embed.setTimestamp();
 		embed.setAuthor(`${message.member.displayName}`, message.member.user.displayAvatarURL());
 		embed.setDescription('Here you\'ll find all information needed to use TTS.');
-		embed.addField('Voices', voice);
+		embed.addField('Voices', voice.toString());
 		embed.setColor('RANDOM');
 		if (db.has(`${message.guild.id}.channel`)) {
 			const channel = message.guild.channels.cache.get(db.get(`${message.guild.id}.channel`));
-			embed.addField('Channel', channel);
+			embed.addField('Channel', channel.toString());
 		}
 		message.reply({ embeds: [embed] });
         
