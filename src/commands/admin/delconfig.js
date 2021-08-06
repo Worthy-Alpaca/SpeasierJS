@@ -10,8 +10,11 @@ module.exports = {
 		voices.forEach(voice => {
 			let role = message.guild.roles.cache.find(r => r.name === voice);
 			if (!role) return;
-			role.delete();
+			role.delete().catch(error => {
+				return;
+			});
 		});
+
 		db.delete(`${message.guild.id}`);
 		message.reply('Server successfully deleted from database.');
 
