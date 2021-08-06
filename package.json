@@ -27,6 +27,7 @@
     "discord.js": "^13.0.0",
     "dotenv": "^8.2.0",
     "ffmpeg-static": "^4.2.8",
+    "libsodium-wrappers": "^0.7.9",
     "node-fetch": "^2.6.1",
     "nodemon": "^2.0.7",
     "quick.db": "^7.1.3",
