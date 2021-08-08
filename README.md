@@ -32,4 +32,4 @@ You can invite Speasier to your server [here][invite].
 Check out the [contributing guide][contributing]
 
 [contributing]: CONTRIBUTING.md
-[invite]: https://discord.com/api/oauth2/authorize?client_id=863510930793168917&permissions=271608896&scope=bot
+[invite]: https://discord.com/api/oauth2/authorize?client_id=766259584040960001&permissions=271608896&scope=bot
