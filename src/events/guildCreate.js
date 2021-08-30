@@ -12,7 +12,7 @@ module.exports = client => {
 			.setDescription('Thank you for adding me to your guild. Please see [here](https://worthy-alpaca.github.io/SpeasierJS/) for documentation on how to make me work for you.')
 			.setFooter(`Version: ${client.version}`);
 
-		let channel = guild.systemChannel();
+		let channel = guild.systemChannel;
 
 		if (!channel) {
 			return guild.owner.send({embeds: [embed]});
