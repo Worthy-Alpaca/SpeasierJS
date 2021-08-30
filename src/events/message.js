@@ -21,7 +21,7 @@ module.exports = client => {
 			client.playing.set(message.guild.id, Date.now() + time);
 			
 			setTimeout(() => {
-				if (client.playing.get(message.guild.id) >= Date.now()) {
+				if (client.playing.get(message.guild.id) > Date.now()) {
 					return;
 				} else {
 					const connection = getVoiceConnection(message.guild.id);
