@@ -35,6 +35,7 @@ module.exports = client => {
 		} 
 	});
 
+	// function to handle commands
 	async function runCommand(message) {
 		const args = message.content.slice(client.prefix.length).trim().split(/ +/g);
 
