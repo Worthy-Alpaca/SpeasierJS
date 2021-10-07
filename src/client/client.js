@@ -8,8 +8,11 @@ class CustomClient extends Client {
 
 		this.prefix = '?';
 		this.version = version;
+		this.id = process.env.CLIENT_ID;
 
 		this.playing = new Map();
+
+		this.interactions = new Array();
 
 		this.commands = new Collection();
 		this.aliases = new Collection();
