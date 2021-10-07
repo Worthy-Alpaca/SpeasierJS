@@ -4,7 +4,7 @@ const ascii = require('ascii-table');
 
 // Create a new Ascii table
 let table = new ascii('Commands');
-table.setHeading('Command', 'Load status');
+table.setHeading('Command', 'Load status', 'Slash Command');
 
 module.exports = async (client) => {
 	var a = 0;
@@ -22,10 +22,13 @@ module.exports = async (client) => {
 			if (pull.name && pull.category && pull.description) {
 
 				client.commands.set(pull.name, pull);
-				table.addRow(file, 'operational ✅');
+				if (pull.data) {
+					client.interactions.push(pull.data.toJSON());
+				}
+				table.addRow(file, 'operational ✅', pull.data ? '✅' : '❌');
 			} else {
 				// mandatory headers are: name, category, description, permission
-				table.addRow(file, '❌  -> missing a mandatory header');
+				table.addRow(file, '❌  -> missing a mandatory header', '❌');
 				a++;
 				continue;
 			}
