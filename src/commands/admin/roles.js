@@ -1,9 +1,14 @@
 const db = require('quick.db');
 const { voices } = require('../../assets/voices.json');
+const { SlashCommandBuilder } = require('@discordjs/builders');
+
 module.exports = {
 	name: 'createvoices',
 	category: 'admin',
-	description: 'Creates the voice roles',
+	description: 'Creates the standard voice roles',
+	data: new SlashCommandBuilder()
+		.setName('createvoices')
+		.setDescription('Creates the standard voice roles'),
 	execute: async (client, message, args) => {
 		if (!db.has(`${message.guild.id}.voices`)) {
 			db.set(`${message.guild.id}.voices`, voices.default);
