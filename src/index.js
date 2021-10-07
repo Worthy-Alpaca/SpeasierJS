@@ -1,8 +1,8 @@
 const fs = require('fs');
-const client = require('./client/client');
 require('dotenv').config();
+const client = require('./client/client');
 
-['commands'].forEach(handler => {
+['commands', 'publish'].forEach(handler => {
 	require(`./handler/${handler}`)(client);
 });
 
