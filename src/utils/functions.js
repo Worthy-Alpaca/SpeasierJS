@@ -14,7 +14,7 @@ async function textToSpeechSynth(message, text) {
 		secretAccessKey: decrypt(db.get(`${message.guild.id}.config.secretAccessKey`)).toString(CryptoJS.enc.Utf8)
 	});
 
-	var voice = message.guild.roles.cache.get(db.get(`${message.guild.id}.registered.${message.author.id}.voice`));
+	var voice = message.guild.roles.cache.get(db.get(`${message.guild.id}.registered.${message.member.id}.voice`));
 	if (!voice) {
 		voice = {
 			name: 'Raveena'
@@ -41,7 +41,7 @@ async function textToSpeechSynth(message, text) {
 		content = cleanargs.join(' ');
 	}
 
-	if (message.mentions.users.size > 0 || message.mentions.channels.size > 0) {
+	if (message.mentions?.users.size > 0 || message.mentions?.channels.size > 0) {
 		content = await filterInteger(message, content);
 	}
 
@@ -60,7 +60,7 @@ async function textToSpeechSynth(message, text) {
 
 	let polly = new AWS.Polly();
 
-	let volume = db.get(`${message.guild.id}.registered.${message.author.id}.volume`) || 1;
+	let volume = db.get(`${message.guild.id}.registered.${message.member.id}.volume`) || 1;
 
 	polly.synthesizeSpeech(params, async function (err, data) {
 		if (err) return message.reply(`An error occured, please contact a bot admin! Error: ${err}`);
