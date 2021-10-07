@@ -10,7 +10,7 @@ module.exports = client => {
 		let voices = db.get(`${guild.id}.voices`);
 
 		voices.forEach(voice => {
-			let role = message.guild.roles.cache.find(r => r.name === voice);
+			let role = guild.roles.cache.find(r => r.name === voice);
 			if (!role) return;
 			role.delete().catch(error => {
 				return;
