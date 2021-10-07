@@ -1,6 +1,8 @@
 const db = require('quick.db');
 const Discord = require('discord.js');
+const { SlashCommandBuilder } = require('@discordjs/builders');
 const { voices } = require('../../assets/voices.json');
+
 module.exports = {
 	name: 'voices',
 	category: 'info',
@@ -12,11 +14,15 @@ module.exports = {
 		const embed = new Discord.MessageEmbed()
 			.setTimestamp()
 			.setAuthor(message.guild.name, message.guild.iconURL())
+			.setColor('RANDOM')
 			.setTitle('Available Voices')
 			.addField('Usable Voices', cVoices.join('\n'), true)
 			.addField('Addable Voices', aVoices.join('\n'), true);
 		
-		return message.channel.send({ embeds: [embed]});
+		return message.reply({ embeds: [embed]});
 
-	}
+	},
+	data: new SlashCommandBuilder()
+		.setName('voices')
+		.setDescription('Displays all available voices'),
 };

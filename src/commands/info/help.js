@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const { stripIndents } = require('common-tags');
 const { version } = require('../../../package.json');
+const { SlashCommandBuilder } = require('@discordjs/builders');
 
 module.exports = {
 	name: 'help',
@@ -9,16 +10,21 @@ module.exports = {
 	description: 'Returns this list',
 	usage: '[command | alias]',
 	execute: async (client, message, args) => {
-
-		if (args[0]) {
-			return getCMD(client, message, args[0]);
+		const option = message.options ? message.options.getString('command') : args[0];
+		if (option) {
+			return getCMD(client, message, option);
 		} else {
 			return getAll(client, message);
 		}
 
-	}
-
-
+	},
+	data: new SlashCommandBuilder()
+		.setName('help')
+		.setDescription('Returns a list of all commands')
+		.addStringOption(option =>
+			option.setName('command')
+				.setDescription('Returns information about a specific command')
+				.setRequired(false))
 };
 /**
  * @description returns a list of all commands
@@ -47,7 +53,7 @@ function getAll(client, message) {
 		.map(cat => stripIndents`**${cat[0].toUpperCase() + cat.slice(1)}** \n${commands(cat)}`)
 		.reduce((string, category) => string + '\n' + category);
 
-	return message.channel.send({ embeds: [embed.setDescription(info)]});
+	return message.reply({ embeds: [embed.setDescription(info)]});
 }
 
 /**
@@ -70,7 +76,7 @@ function getCMD(client, message, input) {
 	let info = `What do you mean with **${input.toLowerCase()}**? I don't know what you are talking about`;
 
 	if (!cmd) {
-		return message.channel.send({ embeds: [embed.setColor('RED').setDescription(info)]});
+		return message.reply({ embeds: [embed.setColor('RED').setDescription(info)]});
 
 	}
 
@@ -83,7 +89,7 @@ function getCMD(client, message, input) {
 
 	}
 
-	return message.channel.send({ embeds: [embed.setColor('GREEN').setDescription(info)]});
+	return message.reply({ embeds: [embed.setColor('GREEN').setDescription(info)]});
 }
 
 
