@@ -45,7 +45,9 @@ npm install
 
 - Lastly you need to put some things into the included `.env.copy` file, copy and rename it to `.env`
     - Your discord Token
-    - Your AWS credentials
+    - Your CLIENT ID
+    - Your DEV Server ID
+    - A Random string of characters for `CRYPTO_CYPER` used for ecrypting the AWS credentials
 
 *Note: You may receive an error message about npm not finding a python installation.*
 *If that happens you need to do two things*
